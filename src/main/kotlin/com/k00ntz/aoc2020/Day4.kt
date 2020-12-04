@@ -1,18 +1,17 @@
 package com.k00ntz.aoc2020
 
 import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.getFile
+import com.k00ntz.aoc2020.utils.getFileAsLineSequence
 import com.k00ntz.aoc2020.utils.measureAndPrintTime
 
 class Day4 : Day<List<PassportLine>, Int, Int> {
     override fun run() {
-
-        val inputFile = parse(getFile("${this.javaClass.simpleName.toLowerCase()}.txt"))
+        val inputFile = parse(getFileAsLineSequence("${this.javaClass.simpleName.toLowerCase()}.txt"))
         measureAndPrintTime { print(part1(inputFile)) }
         measureAndPrintTime { print(part2(inputFile)) }
     }
 
-    fun parse(input: List<String>) =
+    fun parse(input: Sequence<String>) =
         input.fold(mutableListOf("")) { acc: MutableList<String>, s: String? ->
             if (s.isNullOrBlank()) {
                 acc.add("")

@@ -3,6 +3,7 @@ package com.k00ntz.aoc2020.utils
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import java.util.stream.Collectors
+import kotlin.streams.asSequence
 import kotlin.system.measureTimeMillis
 
 fun measureAndPrintTime(block: () -> Unit) {
@@ -29,11 +30,10 @@ inline fun <T : Any> parseFile(fileName: String, crossinline parsefn: (String) -
         inputStream.bufferedReader().lines().map { parsefn(it) }.collect(Collectors.toList())
     }
 
-inline fun getFile(fileName: String): List<String> =
+fun getFileAsLineSequence(fileName: String): Sequence<String> =
     ClassLoader.getSystemResourceAsStream(fileName).use { inputStream ->
         if (inputStream == null) throw RuntimeException("resource $fileName not found")
-        inputStream.bufferedReader().lines().collect(Collectors.toList())
-
+        inputStream.bufferedReader().lines().asSequence()
     }
 
 inline fun <T : Any> parseFileIndexed(fileName: String, crossinline parsefn: (Int, String) -> T): List<T> =
