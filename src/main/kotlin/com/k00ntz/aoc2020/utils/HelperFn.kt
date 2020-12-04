@@ -29,6 +29,13 @@ inline fun <T : Any> parseFile(fileName: String, crossinline parsefn: (String) -
         inputStream.bufferedReader().lines().map { parsefn(it) }.collect(Collectors.toList())
     }
 
+inline fun getFile(fileName: String): List<String> =
+    ClassLoader.getSystemResourceAsStream(fileName).use { inputStream ->
+        if (inputStream == null) throw RuntimeException("resource $fileName not found")
+        inputStream.bufferedReader().lines().collect(Collectors.toList())
+
+    }
+
 inline fun <T : Any> parseFileIndexed(fileName: String, crossinline parsefn: (Int, String) -> T): List<T> =
     ClassLoader.getSystemResourceAsStream(fileName).use { inputStream ->
         if (inputStream == null) throw RuntimeException("resource $fileName not found")
