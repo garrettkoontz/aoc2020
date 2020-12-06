@@ -1,8 +1,8 @@
 package com.k00ntz.aoc2020
 
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class Day4Test {
 
@@ -24,7 +24,7 @@ internal class Day4Test {
         iyr:2011 ecl:brn hgt:59in
     """.trimIndent()
 
-    val input = day4.parse(inputStr.split("\n"))
+    val input = day4.parse(inputStr.split("\n").asSequence())
 
     val invalidPInputStr = """
         eyr:1972 cid:100
@@ -42,7 +42,7 @@ internal class Day4Test {
         pid:3556412378 byr:2007
     """.trimIndent()
 
-    val invalidInput = day4.parse(invalidPInputStr.split("\n"))
+    val invalidInput = day4.parse(invalidPInputStr.split("\n").asSequence())
 
     val validInputPStr = """pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
 hcl:#623a2f
@@ -57,7 +57,7 @@ eyr:2022
 
 iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719"""
 
-    val validInput = day4.parse(validInputPStr.split("\n"))
+    val validInput = day4.parse(validInputPStr.split("\n").asSequence())
 
     @Test
     fun part1() {
