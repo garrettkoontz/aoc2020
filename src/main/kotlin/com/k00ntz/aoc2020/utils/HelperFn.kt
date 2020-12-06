@@ -47,8 +47,15 @@ inline fun <T : Any> parseLine(fileName: String, crossinline parsefn: (String) -
         inputStream.bufferedReader().lines().map { parsefn(it) }.findFirst()
     }.orElseThrow { RuntimeException("Nothing in $fileName") }
 
-//fun <T> cartesian(c1: Collection<T>, c2: Collection<T> = c1): List<Pair<T, T>> =
-//    c1.flatMap { a -> c2.map { b -> Pair(a, b) } }
+fun groupSeparatedByEmpty(strs: List<String>): List<List<String>> =
+    strs.fold(mutableListOf(mutableListOf())) { acc: MutableList<MutableList<String>>, s: String? ->
+        if (s.isNullOrBlank()) {
+            acc.add(mutableListOf())
+        } else {
+            acc[acc.size - 1].add(s)
+        }
+        acc
+    }
 
 fun <T> cartesian(c1: Iterable<T>, c2: Iterable<T> = c1): List<Pair<T, T>> =
     c1.flatMap { a -> c2.map { b -> Pair(a, b) } }
