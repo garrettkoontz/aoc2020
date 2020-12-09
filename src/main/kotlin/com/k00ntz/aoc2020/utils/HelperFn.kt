@@ -95,3 +95,26 @@ fun gcd(number1: Long, number2: Long): Long {
 
 fun lcm(number1: Long, number2: Long): Long =
     (number1 / gcd(number1, number2)) * number2
+
+fun twoSum(sorted: List<Int>, targetValue: Int): Pair<Int,Int> {
+    var i = 0
+    var j = sorted.size - 1
+    while (i != j) {
+        val sum = sorted[i] + sorted[j]
+        if (sum == targetValue) return Pair(sorted[i], sorted[j])
+        if (sum < targetValue) ++i
+        if (sum > targetValue) --j
+    }
+    return Pair(0, 0)
+}
+fun twoSum(sorted: List<Long>, targetValue: Long): Pair<Long,Long> {
+    var i = 0
+    var j = sorted.size - 1
+    while (i != j) {
+        val sum = sorted[i] + sorted[j]
+        if (sum == targetValue) return Pair(sorted[i], sorted[j])
+        if (sum < targetValue) ++i
+        if (sum > targetValue) --j
+    }
+    return Pair(0L, 0L)
+}

@@ -1,9 +1,6 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
-import com.k00ntz.aoc2020.utils.parseFile
-import com.k00ntz.aoc2020.utils.sum
+import com.k00ntz.aoc2020.utils.*
 
 class Day1 : Day<List<Int>,Int,Int> {
     override fun run() {
@@ -18,20 +15,8 @@ class Day1 : Day<List<Int>,Int,Int> {
     override fun part1(input: List<Int>): Int {
         val targetValue = 2020
         val sorted = input.sorted()
-        val numberPairs = walkForTarget(sorted, targetValue)
+        val numberPairs = twoSum(sorted, targetValue)
         return numberPairs.first * numberPairs.second
-    }
-
-    private fun walkForTarget(sorted: List<Int>, targetValue: Int): Pair<Int,Int> {
-        var i = 0
-        var j = sorted.size - 1
-        while(i != j){
-            val sum = sorted[i] + sorted[j]
-            if(sum == targetValue) return Pair(sorted[i], sorted[j])
-            if(sum < targetValue) ++i
-            if(sum > targetValue) --j
-        }
-        return Pair(0,0)
     }
 
     override fun part2(input: List<Int>): Int {
@@ -40,7 +25,7 @@ class Day1 : Day<List<Int>,Int,Int> {
         while(sorted.isNotEmpty()){
             val third = sorted.last()
             sorted = sorted.dropLast(1)
-            val pair: Pair<Int,Int> = walkForTarget(sorted, targetValue - third)
+            val pair: Pair<Int,Int> = twoSum(sorted, targetValue - third)
             if(pair.sum() != 0)
                 return pair.first * pair.second * third
         }
