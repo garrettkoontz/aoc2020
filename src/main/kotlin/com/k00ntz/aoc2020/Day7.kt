@@ -6,7 +6,6 @@ import com.k00ntz.aoc2020.utils.parseFile
 
 class Day7 : Day<Map<String, Map<String, Int>>, Int, Int> {
 
-
     override fun run() {
         val inputFile =
             parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") {
@@ -37,9 +36,7 @@ class Day7 : Day<Map<String, Map<String, Int>>, Int, Int> {
         return containersList.size
     }
 
-    override fun part2(input: Map<String, Map<String, Int>>): Int =
-        countBags(myBag, input) - 1
-
+    override fun part2(input: Map<String, Map<String, Int>>): Int = countBags(myBag, input) - 1
 
     private fun countBags(bag: String, mp: Map<String, Map<String, Int>>): Int {
         val startRules = mp[bag]
@@ -52,7 +49,6 @@ class Day7 : Day<Map<String, Map<String, Int>>, Int, Int> {
             }
         }
     }
-
 
 }
 
