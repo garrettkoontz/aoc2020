@@ -29,28 +29,14 @@ class Day10 : Day<List<Int>, Int, Long> {
     }
 
     override fun part2(input: List<Int>): Long {
-        val sortedInput = input.toSortedSet()
-
-        val windows = sortedInput.windowed(3)
-
-
-        val startAdapter = sortedInput.maxByOrNull { it }!! + 3
-        return countValidCombos(sortedInput, startAdapter, 1L)
+        val sortedInput = listOf(0, *input.toTypedArray(), input.maxByOrNull { it }!!).sorted()
+        val countMap = mutableMapOf(0 to 1L)
+        sortedInput.dropWhile { countMap.containsKey(it) }.forEach {
+            countMap[it] = (1..3).map { sub -> countMap.getOrDefault(it - sub, 0) }.sum()
+        }
+        return countMap[sortedInput.last()]!!
     }
 
-    fun countValidCombos(inp: SortedSet<Int>, previousAdapter: Int, currentTotal: Long): Long {
-        if (previousAdapter == 0) return 1L
-        val nextValids =
-            (1..3).map { diff ->
-                (previousAdapter - diff).let {
-                    if (it < 0) 0 else it
-                }
-            }.filter {
-                it == 0 || inp.contains(it)
-            }
-        if (nextValids.isEmpty()) return 0L
-        else return currentTotal * nextValids.map { countValidCombos(inp, it) }.sum()
-    }
 }
 
 fun main() {

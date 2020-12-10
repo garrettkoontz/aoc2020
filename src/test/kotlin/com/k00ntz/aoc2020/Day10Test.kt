@@ -60,4 +60,10 @@ internal class Day10Test {
         assertEquals(35, day10.part1(input1))
         assertEquals(220, day10.part1(input2))
     }
+
+    @Test
+    fun part2(){
+        assertEquals(8, day10.part2(input1))
+        assertEquals(19208, day10.part2(input2))
+    }
 }
