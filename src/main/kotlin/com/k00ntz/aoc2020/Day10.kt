@@ -3,7 +3,6 @@ package com.k00ntz.aoc2020
 import com.k00ntz.aoc2020.utils.Day
 import com.k00ntz.aoc2020.utils.measureAndPrintTime
 import com.k00ntz.aoc2020.utils.parseFile
-import java.util.*
 
 class Day10 : Day<List<Int>, Int, Long> {
     override fun run() {
