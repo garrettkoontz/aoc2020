@@ -25,8 +25,20 @@ fun Point.manhattanDistanceTo(point: Point): Int {
     return abs(this.x() - point.x()) + abs(this.y() - point.y())
 }
 
-fun Point.validNeighbors(map: List<CharArray>, matcher: (Char) -> Boolean = { true }): Set<Point> =
+fun Point.validCrossNeighbors(map: List<CharArray>, matcher: (Char) -> Boolean = { true }): Set<Point> =
     setOf(this + Point(0, 1), this + Point(0, -1), this + Point(1, 0), this + Point(-1, 0))
+        .filter {
+            it.y() >= 0 && it.y() < map.size
+                    && it.x() >= 0 && it.x() < map[it.y()].size
+                    && matcher(map.getPoint(it))
+        }
+        .toSet()
+
+fun Point.validAroundNeighbors(map: List<CharArray>, matcher: (Char) -> Boolean = { true }): Set<Point> =
+    setOf(
+        this + Point(0, 1), this + Point(0, -1), this + Point(1, 0), this + Point(-1, 0),
+        this + Point(1, 1), this + Point(1, -1), this + Point(-1, 1), this + Point(-1, -1)
+    )
         .filter {
             it.y() >= 0 && it.y() < map.size
                     && it.x() >= 0 && it.x() < map[it.y()].size
@@ -72,7 +84,7 @@ fun ccw(p1: Point, p2: Point, p3: Point) =
 
 fun convexHull(pts: List<Point>): List<Point> {
     val n = pts.size
-    val minPt = pts.minBy { it.second }!!
+    val minPt = pts.minByOrNull { it.second }!!
     val parts = pts.partition { it.y() == minPt.y() }
     val others =
         parts.second.sortedBy { (minPt.x().toDouble() - it.x().toDouble()) / (it.y().toDouble() - minPt.y().toDouble()) }
