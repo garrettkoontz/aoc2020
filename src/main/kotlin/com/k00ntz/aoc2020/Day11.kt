@@ -44,34 +44,18 @@ class Day11 : Day<List<List<Char>>, Int, Int> {
         var inp = input
         var out = runModel2(inp)
         while (inp != out) {
-            println(inp.joinToString(separator = "\n"))
-            println()
             inp = out
             out = runModel2(inp)
         }
         return inp.flatMap { it.toList() }.filter { it == '#' }.size
     }
 
-    private fun runModel2(input: List<List<Char>>): List<List<Char>> {
-        val anglePoints = setOf(
-            Point(0, 1), Point(0, -1), Point(1, 0), Point(-1, 0),
-            Point(1, 1), Point(1, -1), Point(-1, 1), Point(-1, -1)
-        )
-        val maxScale = maxOf(input.size, input.first().size)
-        return input.mapIndexed { y, chars ->
+    private fun runModel2(input: List<List<Char>>): List<List<Char>> =
+        input.mapIndexed { y, chars ->
             chars.mapIndexed { x, c ->
                 val point = Point(x, y)
-                val occupiedNeighbors = anglePoints.mapNotNull { pt ->
-                    (1..maxScale).map { point + pt * it }
-                        .firstOrNull {
-                            it.y() >= 0 && it.y() < input.size
-                                    && it.x() >= 0 && it.x() < input[it.y()].size
-                                    && input[y][x] == '#'
-                        }
-                }
-                    .toSet()
-                if (y == 1 && x == 0)
-                    println("stop")
+                val neighbors = point.getAngleNeighbors(input)
+                val occupiedNeighbors = neighbors.filter { input[it.y()][it.x()] == '#' }
                 when (c) {
                     '.' -> '.'
                     'L' -> if (occupiedNeighbors.isEmpty()) '#' else 'L'
@@ -80,8 +64,6 @@ class Day11 : Day<List<List<Char>>, Int, Int> {
                 }
             }
         }
-    }
-
 }
 
 fun main() {

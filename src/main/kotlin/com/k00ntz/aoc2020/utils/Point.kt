@@ -128,3 +128,20 @@ fun Map<Point, PointDrawable>.draw(): String {
     return this.toLists()
         .joinToString(separator = "\n") { l -> l.joinToString(separator = "") { it } }
 }
+
+fun Point.getAngleNeighbors(input: List<List<Char>>): Set<Point> {
+    val anglePoints = setOf(
+        Point(0, 1), Point(0, -1), Point(1, 0), Point(-1, 0),
+        Point(1, 1), Point(1, -1), Point(-1, 1), Point(-1, -1)
+    )
+    val maxScale = maxOf(input.size, input.first().size)
+    val neighbors = anglePoints.mapNotNull { pt ->
+        (1..maxScale).map { this + pt * it }
+            .firstOrNull {
+                it.y() >= 0 && it.y() < input.size
+                        && it.x() >= 0 && it.x() < input[it.y()].size
+                        && setOf('#', 'L').contains(input[it.y()][it.x()])
+            }
+    }
+    return neighbors.toSet()
+}
