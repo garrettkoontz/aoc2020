@@ -118,3 +118,17 @@ fun twoSum(sorted: List<Long>, targetValue: Long): Pair<Long,Long> {
     }
     return Pair(0L, 0L)
 }
+
+inline fun <T> Iterable<T>.firstOrNullIndexed(operation: (index: Int, T) -> Boolean): T? {
+    var index = 0
+    for (element in this) if (operation(index++, element)) return element
+    return null
+}
+
+fun findGCD(number1: Long, number2: Long): Long =
+    if (number2 == 0L) {
+        number1
+    } else findGCD(number2, number1 % number2)
+
+fun findLCM(a: Long, b: Long): Long =
+    a * b / findGCD(a, b)
