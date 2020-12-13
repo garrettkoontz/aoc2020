@@ -34,15 +34,13 @@ class Day13 : Day<BusTime, Long, Long> {
     }
 
     override fun part2(input: BusTime): Long =
-        findTimeMap(input.busSchedule, 100_000_000_000_000L)
+        findTimeMap(input.busSchedule)
 
-    fun findTimeMap(busTimes: List<Long?>, startI: Long): Long {
-        val busTimeMap =
-            TreeMap(busTimes.mapIndexedNotNull { i: Int, b: Long? ->
-                if (b == null) null else Pair(b, i)
-            }.associate { it }
-            )
-        var i = startI
+    fun findTimeMap(busTimes: List<Long?>): Long {
+        val busTimeMap = TreeMap(busTimes.mapIndexedNotNull { i: Int, b: Long? ->
+            b?.let { Pair(b, i) }
+        }.associate { it })
+        var i = 0L
         var lcm = 1L
         for ((k, v) in busTimeMap.descendingMap()) {
             while ((i + v) % k != 0L) i += lcm

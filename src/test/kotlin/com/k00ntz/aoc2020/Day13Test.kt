@@ -16,11 +16,11 @@ internal class Day13Test {
 
     @Test
     fun part2() {
-        assertEquals(1068781, day13.findTimeMap(input.busSchedule, 1000000))
-        assertEquals(3417, day13.findTimeMap(listOf(17, null, 13, 19), 3000))
-        assertEquals(754018, day13.findTimeMap(listOf(67, 7, 59, 61), 700000))
-        assertEquals(779210, day13.findTimeMap(listOf(67, null, 7, 59, 61), 700000))
-        assertEquals(1261476, day13.findTimeMap(listOf(67, 7, null, 59, 61), 1000000))
-        assertEquals(1202161486L, day13.findTimeMap(listOf(1789, 37, 47, 1889), 1000000000L))
+        assertEquals(1068781, day13.findTimeMap(input.busSchedule))
+        assertEquals(3417, day13.findTimeMap(listOf(17, null, 13, 19)))
+        assertEquals(754018, day13.findTimeMap(listOf(67, 7, 59, 61)))
+        assertEquals(779210, day13.findTimeMap(listOf(67, null, 7, 59, 61)))
+        assertEquals(1261476, day13.findTimeMap(listOf(67, 7, null, 59, 61)))
+        assertEquals(1202161486L, day13.findTimeMap(listOf(1789, 37, 47, 1889)))
     }
 }
