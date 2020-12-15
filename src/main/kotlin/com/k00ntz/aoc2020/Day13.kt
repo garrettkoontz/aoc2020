@@ -25,9 +25,8 @@ class Day13 : Day<BusTime, Long, Long> {
     }
 
     override fun part1(input: BusTime): Long {
-        val busTimes = input.busSchedule.filterNotNull()
         val earliestDeparture = input.earliestDeparture
-        val bestBus = busTimes.minByOrNull {
+        val bestBus = input.busSchedule.filterNotNull().minByOrNull {
             it - earliestDeparture % it
         } ?: throw RuntimeException("No buses")
         return bestBus * (bestBus - earliestDeparture % bestBus)
