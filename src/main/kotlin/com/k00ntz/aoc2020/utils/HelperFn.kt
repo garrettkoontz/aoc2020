@@ -23,6 +23,13 @@ fun List<CharArray>.getPointOrNull(pt: Point): Char? {
     return this[pt.y()][pt.x()]
 }
 
+@JvmName("getPointOrNullChar")
+fun List<List<Char>>.getPointOrNull(pt: Point): Char? {
+    if (pt.y() < 0 || pt.y() >= this.size) return null
+    if (pt.x() < 0 || pt.x() >= this[pt.y()].size) return null
+    return this[pt.y()][pt.x()]
+}
+
 inline fun <T : Any> parseFile(fileName: String, crossinline parsefn: (String) -> T): List<T> =
     ClassLoader.getSystemResourceAsStream(fileName).use { inputStream ->
         if (inputStream == null) throw RuntimeException("resource $fileName not found")
