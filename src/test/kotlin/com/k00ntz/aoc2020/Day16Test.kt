@@ -22,8 +22,27 @@ nearby tickets:
 
     val input = day16.parse(inputStr.split("\n"))
 
+    val inputStr2 = """class: 0-1 or 4-19
+row: 0-5 or 8-19
+seat: 0-13 or 16-19
+
+your ticket:
+11,12,13
+
+nearby tickets:
+3,9,18
+15,1,5
+5,14,9"""
+
+    val input2 = day16.parse(inputStr2.split("\n"))
+
     @Test
     fun part1() {
         assertEquals(71, day16.part1(input))
+    }
+
+    @Test
+    fun part2(){
+        day16.part2(input2)
     }
 }

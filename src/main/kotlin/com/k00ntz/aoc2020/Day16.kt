@@ -4,7 +4,7 @@ import com.k00ntz.aoc2020.utils.Day
 import com.k00ntz.aoc2020.utils.getFile
 import com.k00ntz.aoc2020.utils.measureAndPrintTime
 
-class Day16 : Day<TicketInput, Int, Int> {
+class Day16 : Day<TicketInput, Int, Long> {
     override fun run() {
         val inputFile =
 //            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") {}
@@ -16,7 +16,7 @@ class Day16 : Day<TicketInput, Int, Int> {
     }
 
     fun parse(file: List<String>): TicketInput {
-        val ruleRegex = "([A-z]+): ([0-9]+)-([0-9]+) or ([0-9]+)-([0-9]+)".toRegex()
+        val ruleRegex = "(.*): ([0-9]+)-([0-9]+) or ([0-9]+)-([0-9]+)".toRegex()
         val myTicketLine = "your ticket:"
         val nearbyTicketLine = "nearby tickets:"
         val rules = mutableListOf<TicketRule>()
@@ -31,7 +31,6 @@ class Day16 : Day<TicketInput, Int, Int> {
                     rules.add(TicketRule(name, (r1.toInt()..r2.toInt()), (r3.toInt()..r4.toInt())))
                 }
             }
-
             if (myTicketFlag && nearbyTicketsFlag)
                 nearbyTickets.add(s.split(",").map { it.toInt() })
             if (s == nearbyTicketLine) nearbyTicketsFlag = true
@@ -50,11 +49,33 @@ class Day16 : Day<TicketInput, Int, Int> {
         return invalidTickets.sum()
     }
 
-    override fun part2(input: TicketInput): Int {
+    override fun part2(input: TicketInput): Long {
+        val matchedRules = matchRules(input)
+        val departureValues = matchedRules.filter {it.value.name.contains("departure")}
+        return departureValues.map { input.myTicket[it.key] }
+            .fold(1L) { a, b -> a * b.toLong()}
+    }
+
+    fun matchRules(input: TicketInput): Map<Int, TicketRule> {
         val validTickets = input.nearbyTickets.filter { ticket ->
             ticket.all { values -> input.rules.any { it.checkRange(values) } }
         }
-        validTickets.map { ticket -> ticket.withIndex().map { Pair(it.index, it.value) } }.groupBy { }
+        val transposeTickets = validTickets.flatMap { ticket -> ticket.withIndex().map { Pair(it.index, it.value) } }
+            .groupBy({ it.first }, { it.second })
+
+        var matchingRules: Map<Int, MutableSet<TicketRule>> = transposeTickets.map { (idx, ticketValues) ->
+            Pair(idx, input.rules.filter { rule -> ticketValues.all { rule.checkRange(it) } }.toMutableSet())
+        }.associate{it}
+
+        val usedRuleSet: MutableSet<TicketRule> = matchingRules.filterValues { it.size == 1 }.values.flatten().toMutableSet()
+        while(matchingRules.values.any { it.size > 1 }){
+            matchingRules.forEach { t, u ->
+                u.removeIf{u.size > 1 && usedRuleSet.contains(it)}
+            }
+            usedRuleSet.addAll(matchingRules.filterValues { it.size == 1 }.values.flatten())
+        }
+
+        return matchingRules.mapValues { it.value.first() }
     }
 
 }
