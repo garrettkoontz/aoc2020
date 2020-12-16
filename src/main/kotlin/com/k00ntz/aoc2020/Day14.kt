@@ -98,6 +98,7 @@ data class BitMask(val mask: String, val writes: List<MemoryWrite>)
 
 data class MemoryWrite(val index: Int, val value: Long)
 
+@ExperimentalUnsignedTypes
 fun main() {
     println("Day 14")
     Day14().run()

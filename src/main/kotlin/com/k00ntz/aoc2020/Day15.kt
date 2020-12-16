@@ -16,46 +16,43 @@ class Day15 : Day<List<Int>, Int, Int> {
     }
 
     override fun part1(input: List<Int>): Int {
-        val mg = MemoryGame(input)
-        val list = mg.take(2020)
-        return list.last()
+        val mg = MemoryGame(input, 2020).iterator()
+        var i = input.size
+        while (++i < 2020) mg.next()
+        return mg.next()
     }
 
     override fun part2(input: List<Int>): Int {
-        val mg = MemoryGame(input)
-        val list = mg.take(30_000_000)
-        return list.last()
+        val mg = MemoryGame(input, 300_000_000).iterator()
+        var i = input.size
+        while (++i < 30_000_000) mg.next()
+        return mg.next()
     }
 
 }
 
-class MemoryGame(private val startList: List<Int>) : Iterable<Int> {
+class MemoryGame(private val startList: List<Int>, val total: Int) : Iterable<Int> {
     override fun iterator(): Iterator<Int> =
         object : Iterator<Int> {
-            private val list: MutableList<Int> = mutableListOf()
+            private var last = startList.last()
 
-            private val indexMap: MutableMap<Int, Int> =
-                startList.dropLast(1).mapIndexed { index: Int, i: Int -> Pair(i, index) }.associate { it }
-                    .toMutableMap()
+            private val indexMap: Array<Int?> =
+                startList.foldIndexed(arrayOfNulls(total)) { index: Int, acc: Array<Int?>, i: Int ->
+                    acc[i] = index
+                    acc
+                }
 
-            private var i = 0
+            private var i = startList.size - 1
 
             override fun hasNext(): Boolean = true
 
-            override fun next(): Int =
-                (if (startList.size > i) startList[i]
-                else {
-                    val recent = list.last()
-                    if (indexMap.containsKey(recent)) {
-                        (i - indexMap[recent]!! - 1).also { indexMap[recent] = i -1 }
-                    } else {
-                        indexMap[recent] = i - 1
-                        0
-                    }
-                }).also {
-                    list.add(it)
-                    i++
-                }
+            override fun next(): Int {
+                val j = indexMap[last]
+                indexMap[last] = i
+                last = if (j != null) i - j else 0
+                i++
+                return last
+            }
         }
 }
 
