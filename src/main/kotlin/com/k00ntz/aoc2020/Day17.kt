@@ -8,7 +8,7 @@ class Day17 : Day<Set<Point3>, Int, Int> {
             parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { it.toCharArray() }
                 .flatMapIndexed { y, chars ->
                     chars.mapIndexed { x, c ->
-                        if (c == '#') Point3(x, y, 1) else null
+                        if (c == '#') Point3(x, y, 0) else null
                     }.filterNotNull()
                 }.toSet()
 //            parse(getFileAsLineSequence("${this.javaClass.simpleName.toLowerCase()}.txt"))
@@ -19,32 +19,39 @@ class Day17 : Day<Set<Point3>, Int, Int> {
     }
 
     override fun part1(input: Set<Point3>): Int {
+        val sixIteration = (1..6).fold(input) { acc: Set<Point3>, i: Int ->
+            acc.next()
+        }
+        return sixIteration.size
+    }
+
+    override fun part2(input: Set<Point3>): Int {
+        val point4s = input.map { Point4.fromPoint3(it) }.toSet()
+        val sixIteration = (1..6).fold(point4s) { acc: Set<Point4>, i: Int ->
+            acc.next()
+        }
+        return sixIteration.size
     }
 
 }
 
-fun Set<Point3>.next(): Set<Point3> {
-    val maxX = this.maxByOrNull { it.x }!!.x + 1
-    val minX = this.minByOrNull { it.x }!!.x - 1
-    val minY = this.minByOrNull { it.y }!!.y + 1
-    val maxY = this.maxByOrNull { it.y }!!.y - 1
-    val minZ = this.minByOrNull { it.z }!!.z + 1
-    val maxZ = this.maxByOrNull { it.z }!!.z - 1
-    return (minX..maxX).flatMap { x ->
-        (minY..maxY).flatMap { y ->
-            (minZ..maxZ).pmap { z ->
-                val pt = Point3(x, y, z)
-                val validNeighbors = pt.neighbors().intersect(this)
-                if (this.contains(pt)) {
+fun <T : Neighborly<T>> Set<T>.next(): Set<T> {
+    val pointsAndNeighbors = this.associateBy({it}, {it.neighbors()})
+    val neighborsAndNeighbors = pointsAndNeighbors.values.flatten().toSet().associateBy({it}, {it.neighbors()})
+    val nextPoints = pointsAndNeighbors.entries.map { (point, neighbors) ->
+                val validNeighbors = neighbors.intersect(this)
                     if ((2..3).contains(validNeighbors.size))
-                        pt
+                        point
                     else null
-                } else {
-                    if (validNeighbors.size == 3) pt else null
-                }
-            }.filterNotNull()
-        }
-    }.toSet()
+            }.filterNotNull().toSet()
+    val nextPointsNeighbors = neighborsAndNeighbors.map { (point, neighbors) ->
+        val validNeighbors = neighbors.intersect(this)
+        if (3 == validNeighbors.size)
+            point
+        else null
+    }.filterNotNull()
+
+    return nextPoints.plus(nextPointsNeighbors)
 }
 
 fun main() {
