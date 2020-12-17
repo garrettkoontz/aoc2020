@@ -27,7 +27,9 @@ class Day16 : Day<TicketInput, Int, Long> {
         for (s in file) {
             if (s.isEmpty()) continue
             if (s.matches(ruleRegex)) {
-                ruleRegex.matchEntire(s)!!.destructured.let { (name: String, r1: String, r2: String, r3: String, r4: String) ->
+                ruleRegex.matchEntire(s)!!.destructured.let { (name: String,
+                                                                  r1: String, r2: String,
+                                                                  r3: String, r4: String) ->
                     rules.add(TicketRule(name, (r1.toInt()..r2.toInt()), (r3.toInt()..r4.toInt())))
                 }
             }
@@ -51,26 +53,27 @@ class Day16 : Day<TicketInput, Int, Long> {
 
     override fun part2(input: TicketInput): Long {
         val matchedRules = matchRules(input)
-        val departureValues = matchedRules.filter {it.value.name.contains("departure")}
+        val departureValues = matchedRules.filter { it.value.name.contains("departure") }
         return departureValues.map { input.myTicket[it.key] }
-            .fold(1L) { a, b -> a * b.toLong()}
+            .fold(1L) { a, b -> a * b.toLong() }
     }
 
-    fun matchRules(input: TicketInput): Map<Int, TicketRule> {
+    private fun matchRules(input: TicketInput): Map<Int, TicketRule> {
         val validTickets = input.nearbyTickets.filter { ticket ->
             ticket.all { values -> input.rules.any { it.checkRange(values) } }
         }
         val transposeTickets = validTickets.flatMap { ticket -> ticket.withIndex().map { Pair(it.index, it.value) } }
             .groupBy({ it.first }, { it.second })
 
-        var matchingRules: Map<Int, MutableSet<TicketRule>> = transposeTickets.map { (idx, ticketValues) ->
+        val matchingRules: Map<Int, MutableSet<TicketRule>> = transposeTickets.map { (idx, ticketValues) ->
             Pair(idx, input.rules.filter { rule -> ticketValues.all { rule.checkRange(it) } }.toMutableSet())
-        }.associate{it}
+        }.associate { it }
 
-        val usedRuleSet: MutableSet<TicketRule> = matchingRules.filterValues { it.size == 1 }.values.flatten().toMutableSet()
-        while(matchingRules.values.any { it.size > 1 }){
-            matchingRules.forEach { t, u ->
-                u.removeIf{u.size > 1 && usedRuleSet.contains(it)}
+        val usedRuleSet: MutableSet<TicketRule> =
+            matchingRules.filterValues { it.size == 1 }.values.flatten().toMutableSet()
+        while (matchingRules.values.any { it.size > 1 }) {
+            matchingRules.forEach { (_, u) ->
+                u.removeIf { u.size > 1 && usedRuleSet.contains(it) }
             }
             usedRuleSet.addAll(matchingRules.filterValues { it.size == 1 }.values.flatten())
         }
