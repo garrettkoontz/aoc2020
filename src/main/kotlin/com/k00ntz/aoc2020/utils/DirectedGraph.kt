@@ -66,7 +66,6 @@ class DirectedGraph<T>(private val nodes: MutableMap<T, DGNode<T>> = mutableMapO
             nodes[t] = it
         }
 
-
     fun addFromTo(t1: T, t2: T) {
         val node1 = nodes[t1] ?: addNode(t1)
         val node2 = nodes[t2] ?: addNode(t2)
