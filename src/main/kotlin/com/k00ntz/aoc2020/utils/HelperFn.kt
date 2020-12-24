@@ -139,3 +139,9 @@ fun findGCD(number1: Long, number2: Long): Long =
 
 fun findLCM(a: Long, b: Long): Long =
     a * b / findGCD(a, b)
+
+fun <T> List<T>.ringIndexOf(t: T): Int =
+    ringIndex(indexOf(t))
+
+fun <T> List<T>.ringIndex(i: Int): Int =
+    (i + size) % size
