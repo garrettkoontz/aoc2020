@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.*
 
 internal class Day9Test {
 
-    val input = listOf<Long>(
+    val input = listOf(
         35L,
         20L,
         15L,

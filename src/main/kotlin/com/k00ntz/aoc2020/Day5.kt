@@ -1,13 +1,14 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
-import com.k00ntz.aoc2020.utils.parseFile
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.parseFile
+import java.util.*
 
 class Day5 : Day<List<BinarySpacePartitionedSeat>, Int, Int> {
     override fun run() {
         val inputFile =
-            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") {
+            parseFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt") {
                 BinarySpacePartitionedSeat(it)
             }
 //            parse(getFileAsLineSequence("${this.javaClass.simpleName.toLowerCase()}.txt"))

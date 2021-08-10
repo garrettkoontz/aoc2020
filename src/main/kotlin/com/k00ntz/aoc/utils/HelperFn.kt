@@ -1,4 +1,4 @@
-package com.k00ntz.aoc2020.utils
+package com.k00ntz.aoc.utils
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking

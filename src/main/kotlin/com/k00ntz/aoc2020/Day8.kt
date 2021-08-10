@@ -1,13 +1,14 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
-import com.k00ntz.aoc2020.utils.parseFile
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.parseFile
+import java.util.*
 
 class Day8 : Day<List<Ops>, Int, Int> {
     override fun run() {
         val inputFile =
-            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { s ->
+            parseFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt") { s ->
                 s.split(" ").let { Ops(it[0], it[1]) }
             }
 //            parse(getFileAsLineSequence("${this.javaClass.simpleName.toLowerCase()}.txt"))
@@ -80,7 +81,7 @@ data class Ops(val opCode: OpCode, val value: Int) {
             else -> this
         }
 
-    constructor(s1: String, s2: String) : this(OpCode.valueOf(s1.toUpperCase()), Integer.parseInt(s2))
+    constructor(s1: String, s2: String) : this(OpCode.valueOf(s1.uppercase(Locale.getDefault())), Integer.parseInt(s2))
 }
 
 

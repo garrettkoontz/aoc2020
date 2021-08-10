@@ -1,14 +1,15 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.getFile
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.getFile
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import java.util.*
 
 class Day19 : Day<List<String>, Int, Int> {
     override fun run() {
         val inputFile =
 //            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
-            getFile("${this.javaClass.simpleName.toLowerCase()}.txt")
+            getFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt")
 //            parseFileIndexed("${this.javaClass.simpleName.toLowerCase()}.txt") {i, s ->  Pair(i,s) }
 //            parseLine("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
         measureAndPrintTime { print(part1(inputFile)) }

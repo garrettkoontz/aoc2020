@@ -1,11 +1,12 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.*
+import com.k00ntz.aoc.utils.*
+import java.util.*
 
 class Day11 : Day<List<List<Char>>, Int, Int> {
     override fun run() {
         val inputFile =
-            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") {
+            parseFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt") {
                 it.toCharArray().toList()
             }
 //            parse(getFileAsLineSequence("${this.javaClass.simpleName.toLowerCase()}.txt"))

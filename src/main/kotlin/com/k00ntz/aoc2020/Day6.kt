@@ -1,15 +1,16 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.getFile
-import com.k00ntz.aoc2020.utils.groupSeparatedByEmpty
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.getFile
+import com.k00ntz.aoc.utils.groupSeparatedByEmpty
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import java.util.*
 
 class Day6 : Day<List<List<String>>, Int, Int> {
     override fun run() {
         val inputFile =
 //            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
-            groupSeparatedByEmpty(getFile("${this.javaClass.simpleName.toLowerCase()}.txt"))
+            groupSeparatedByEmpty(getFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt"))
 //            parseFileIndexed("${this.javaClass.simpleName.toLowerCase()}.txt") {i, s ->  Pair(i,s) }
 //            parseLine("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
         measureAndPrintTime { print(part1(inputFile)) }
@@ -17,15 +18,14 @@ class Day6 : Day<List<List<String>>, Int, Int> {
     }
 
     override fun part1(input: List<List<String>>): Int =
-        input.map { it.flatMap { it.toList().filter { !it.isWhitespace() } }.toSet() }
-            .map { it.size }.sum()
+        input.map { it.flatMap { it.toList().filter { !it.isWhitespace() } }.toSet() }.sumOf { it.size }
 
     override fun part2(input: List<List<String>>): Int =
-        input.map { group ->
+        input.sumOf { group ->
             group.map { it.toCharArray().toSet() }.reduce { acc: Set<Char>, set: Set<Char> ->
                 acc.intersect(set)
             }.size
-        }.sum()
+        }
 }
 
 fun main() {

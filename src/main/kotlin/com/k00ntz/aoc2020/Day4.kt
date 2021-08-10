@@ -1,12 +1,13 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.getFile
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.getFile
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import java.util.*
 
 class Day4 : Day<List<PassportLine>, Int, Int> {
     override fun run() {
-        val inputFile = parse(getFile("${this.javaClass.simpleName.toLowerCase()}.txt"))
+        val inputFile = parse(getFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt"))
         measureAndPrintTime { print(part1(inputFile)) }
         measureAndPrintTime { print(part2(inputFile)) }
     }
@@ -34,6 +35,7 @@ class Day4 : Day<List<PassportLine>, Int, Int> {
     override fun part2(input: List<PassportLine>): Int {
         return input.filter { it.isValidNPCCredsAndData() }.size
     }
+
 }
 
 data class PassportLine(

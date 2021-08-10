@@ -1,11 +1,12 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.*
+import com.k00ntz.aoc.utils.*
+import java.util.*
 
 class Day17 : Day<Set<Point3>, Int, Int> {
     override fun run() {
         val inputFile =
-            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { it.toCharArray() }
+            parseFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt") { it.toCharArray() }
                 .flatMapIndexed { y, chars ->
                     chars.mapIndexed { x, c ->
                         if (c == '#') Point3(x, y, 0) else null
@@ -38,12 +39,12 @@ class Day17 : Day<Set<Point3>, Int, Int> {
 fun <T : Neighborly<T>> Set<T>.next(): Set<T> {
     val pointsAndNeighbors = this.associateBy({it}, {it.neighbors()})
     val neighborsAndNeighbors = pointsAndNeighbors.values.flatten().toSet().associateBy({it}, {it.neighbors()})
-    val nextPoints = pointsAndNeighbors.entries.map { (point, neighbors) ->
-                val validNeighbors = neighbors.intersect(this)
-                    if ((2..3).contains(validNeighbors.size))
-                        point
-                    else null
-            }.filterNotNull().toSet()
+    val nextPoints = pointsAndNeighbors.entries.mapNotNull { (point, neighbors) ->
+        val validNeighbors = neighbors.intersect(this)
+        if ((2..3).contains(validNeighbors.size))
+            point
+        else null
+    }.toSet()
     val nextPointsNeighbors = neighborsAndNeighbors.map { (point, neighbors) ->
         val validNeighbors = neighbors.intersect(this)
         if (3 == validNeighbors.size)

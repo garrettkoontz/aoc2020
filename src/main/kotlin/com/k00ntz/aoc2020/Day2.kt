@@ -1,8 +1,9 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
-import com.k00ntz.aoc2020.utils.parseFile
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.parseFile
+import java.util.*
 
 data class PasswordLine(val firstNum: Int, val secondNum: Int, val letter: Char, val password: String) {
     companion object {
@@ -34,13 +35,11 @@ class Day2 : Day<List<PasswordLine>, Int, Int> {
 
     override fun run() {
         val inputFile =
-            parseFile(this.javaClass.simpleName.toLowerCase() + ".txt")
+            parseFile(this.javaClass.simpleName.lowercase(Locale.getDefault()) + ".txt")
             { s: String ->
                 PasswordLine.newPasswordLine(s)
             }
-
-//            parseFileIndexed(this.javaClass.simpleName.toLowerCase() + ".txt") {i, s ->  Pair(i,s) }
-//            parseLine(this.javaClass.simpleName.toLowerCase() + ".txt") { Integer.parseInt(it) }
+        
         measureAndPrintTime { print(part1(inputFile)) }
         measureAndPrintTime { print(part2(inputFile)) }
     }

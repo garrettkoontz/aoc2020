@@ -1,8 +1,9 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
-import com.k00ntz.aoc2020.utils.parseLine
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.parseLine
+import java.util.*
 
 class Day15 : Day<List<Int>, Int, Int> {
     override fun run() {
@@ -10,7 +11,7 @@ class Day15 : Day<List<Int>, Int, Int> {
 //            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
 //            parse(getFile("${this.javaClass.simpleName.toLowerCase()}.txt"))
 //            parseFileIndexed("${this.javaClass.simpleName.toLowerCase()}.txt") {i, s ->  Pair(i,s) }
-            parseLine("${this.javaClass.simpleName.toLowerCase()}.txt") { it.split(",").map { it.toInt() } }
+            parseLine("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt") { it.split(",").map { it.toInt() } }
         measureAndPrintTime { print(part1(inputFile)) }
         measureAndPrintTime { print(part2(inputFile)) }
     }

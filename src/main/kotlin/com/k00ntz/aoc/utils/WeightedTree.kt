@@ -1,4 +1,4 @@
-package com.k00ntz.aoc2020.utils
+package com.k00ntz.aoc.utils
 
 class WeightedTree<T, W>(private val nodeMap: MutableMap<T, TreeNode<T, W>> = mutableMapOf()) {
 

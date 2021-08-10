@@ -1,11 +1,12 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.*
+import com.k00ntz.aoc.utils.*
+import java.util.*
 
 class Day1 : Day<List<Int>,Int,Int> {
     override fun run() {
         val inputFile =
-            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
+            parseFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt") { Integer.parseInt(it) }
 //            parseFileIndexed(this.javaClass.simpleName.toLowerCase() + ".txt") {i, s ->  Pair(i,s) }
 //            parseLine(this.javaClass.simpleName.toLowerCase() + ".txt") { Integer.parseInt(it) }
         measureAndPrintTime { print(part1(inputFile)) }

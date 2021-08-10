@@ -1,13 +1,14 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
-import com.k00ntz.aoc2020.utils.parseFile
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.parseFile
+import java.util.*
 
 class Day10 : Day<List<Int>, Int, Long> {
     override fun run() {
         val inputFile =
-            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
+            parseFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt") { Integer.parseInt(it) }
 //            parse(getFileAsLineSequence("${this.javaClass.simpleName.toLowerCase()}.txt"))
 //            parseFileIndexed("${this.javaClass.simpleName.toLowerCase()}.txt") {i, s ->  Pair(i,s) }
 //            parseLine("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
@@ -31,7 +32,7 @@ class Day10 : Day<List<Int>, Int, Long> {
         val sortedInput = listOf(0, *input.toTypedArray(), input.maxByOrNull { it }!!).sorted()
         val countMap = mutableMapOf(0 to 1L)
         sortedInput.dropWhile { countMap.containsKey(it) }.forEach {
-            countMap[it] = (1..3).map { sub -> countMap.getOrDefault(it - sub, 0) }.sum()
+            countMap[it] = (1..3).sumOf { sub -> countMap.getOrDefault(it - sub, 0) }
         }
         return countMap[sortedInput.last()]!!
     }

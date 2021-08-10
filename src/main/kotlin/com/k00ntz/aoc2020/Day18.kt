@@ -1,14 +1,14 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
-import com.k00ntz.aoc2020.utils.parseFile
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.parseFile
 import java.util.*
 
 class Day18 : Day<List<String>, Long, Long> {
     override fun run() {
         val inputFile =
-            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { it }
+            parseFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt") { it }
 //            parse(getFileAsLineSequence("${this.javaClass.simpleName.toLowerCase()}.txt"))
 //            parseFileIndexed("${this.javaClass.simpleName.toLowerCase()}.txt") {i, s ->  Pair(i,s) }
 //            parseLine("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
@@ -17,10 +17,10 @@ class Day18 : Day<List<String>, Long, Long> {
     }
 
     override fun part1(input: List<String>): Long =
-        input.map { evaluate(it.replace(" ", "")).first }.sum()
+        input.sumOf { evaluate(it.replace(" ", "")).first }
 
     override fun part2(input: List<String>): Long =
-        input.map { eval2(it.replace("(", "( ").replace(")", " )")) }.sum()
+        input.sumOf { eval2(it.replace("(", "( ").replace(")", " )")) }
 
     fun evaluate(str: String): Pair<Long, Int> {
         val stack = Stack<Pair<Operator?, Long?>>()
@@ -68,7 +68,7 @@ class Day18 : Day<List<String>, Long, Long> {
 
 class ExpressionTree(val nodes: List<ExpressionNode>) {
     fun size(): Int =
-        nodes.map { it.size() }.sum()
+        nodes.sumOf { it.size() }
 
     fun evaluate(): Long {
         val toTopLevelNodes = nodes.map {
@@ -120,17 +120,16 @@ object Plus : ExpressionNode() {
         return "+"
     }
 
-    fun evaluate(expr1: ExpressionNode, expr2: ExpressionNode): Long {
+    fun evaluate(expr1: ExpressionNode, expr2: ExpressionNode): Long =
         if (expr1 is ExpressionNumber && expr2 is ExpressionNumber) {
-            return expr1.l + expr2.l
+            expr1.l + expr2.l
         } else if (expr1 is SubExpression && expr2 is ExpressionNumber) {
-            return expr1.evaluate() + expr2.l
+            expr1.evaluate() + expr2.l
         } else if (expr2 is SubExpression && expr1 is ExpressionNumber) {
-            return expr2.evaluate() + expr1.l
+            expr2.evaluate() + expr1.l
         } else {
-            return (expr1 as SubExpression).evaluate() + (expr2 as SubExpression).evaluate()
+            (expr1 as SubExpression).evaluate() + (expr2 as SubExpression).evaluate()
         }
-    }
 }
 
 object Times : ExpressionNode() {
@@ -139,17 +138,16 @@ object Times : ExpressionNode() {
         return "*"
     }
 
-    fun evaluate(expr1: ExpressionNode, expr2: ExpressionNode): Long {
+    fun evaluate(expr1: ExpressionNode, expr2: ExpressionNode): Long =
         if (expr1 is ExpressionNumber && expr2 is ExpressionNumber) {
-            return expr1.l * expr2.l
+            expr1.l * expr2.l
         } else if (expr1 is SubExpression && expr2 is ExpressionNumber) {
-            return expr1.evaluate() * expr2.l
+            expr1.evaluate() * expr2.l
         } else if (expr2 is SubExpression && expr1 is ExpressionNumber) {
-            return expr2.evaluate() * expr1.l
+            expr2.evaluate() * expr1.l
         } else {
-            return (expr1 as SubExpression).evaluate() * (expr2 as SubExpression).evaluate()
+            (expr1 as SubExpression).evaluate() * (expr2 as SubExpression).evaluate()
         }
-    }
 }
 
 class SubExpression(val subTree: ExpressionTree) : ExpressionNode() {

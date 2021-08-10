@@ -1,4 +1,4 @@
-package com.k00ntz.aoc2020.utils
+package com.k00ntz.aoc.utils
 
 interface Day<I,O1,O2> {
     fun run()

@@ -1,4 +1,4 @@
-package com.k00ntz.aoc2020.utils
+package com.k00ntz.aoc.utils
 
 import com.k00ntz.aoc2020.*
 

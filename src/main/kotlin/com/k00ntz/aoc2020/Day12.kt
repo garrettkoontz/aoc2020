@@ -1,6 +1,7 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.*
+import com.k00ntz.aoc.utils.*
+import java.util.*
 
 class Day12 : Day<List<DirectionInput>, Int, Int> {
     private val parseRegex = "([E-W])([0-9]+)".toRegex()
@@ -13,7 +14,7 @@ class Day12 : Day<List<DirectionInput>, Int, Int> {
 
     override fun run() {
         val inputFile =
-            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt", parseFun)
+            parseFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt", parseFun)
 //            parse(getFileAsLineSequence("${this.javaClass.simpleName.toLowerCase()}.txt"))
 //            parseFileIndexed("${this.javaClass.simpleName.toLowerCase()}.txt") {i, s ->  Pair(i,s) }
 //            parseLine("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }

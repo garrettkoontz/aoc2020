@@ -1,4 +1,4 @@
-package com.k00ntz.aoc2020.utils
+package com.k00ntz.aoc.utils
 
 class Ring<T : Any>(private val list: List<T>, private val size: Int = list.size, private var start: Int = 0) :
     Iterable<T> {
@@ -18,7 +18,7 @@ class MapRing<T>(val mp: MutableMap<T, T>) {
 
     fun toList(start: T): List<T> {
         var s = start
-        val lst = mutableListOf<T>(s)
+        val lst = mutableListOf(s)
         while (lst.size < mp.size) {
             s = mp[s]!!
             lst.add(s)

@@ -1,6 +1,6 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Point3
+import com.k00ntz.aoc.utils.Point3
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*

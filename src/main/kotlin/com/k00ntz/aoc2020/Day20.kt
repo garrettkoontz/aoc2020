@@ -1,15 +1,16 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.getFile
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.getFile
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import java.util.*
 import kotlin.math.sqrt
 
 class Day20 : Day<List<Image>, Long, Int> {
     override fun run() {
         val inputFile =
 //            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
-            parse(getFile("${this.javaClass.simpleName.toLowerCase()}.txt"))
+            parse(getFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt"))
 //            parseFileIndexed("${this.javaClass.simpleName.toLowerCase()}.txt") {i, s ->  Pair(i,s) }
 //            parseLine("${this.javaClass.simpleName.toLowerCase()}.txt") { Integer.parseInt(it) }
         measureAndPrintTime { print(part1(inputFile)) }
@@ -22,7 +23,7 @@ class Day20 : Day<List<Image>, Long, Int> {
             if (s.contains("Tile")) listOf(index) else listOf()
         }
         return idxs.mapIndexed { idx, i ->
-            val j = idxs.getOrNull(idx + 1) ?: file.size + 1
+            val j = idxs.getOrNull(idx + 1) ?: (file.size + 1)
             val id = parseTile.matchEntire(file[i])!!.destructured.component1().toInt()
             val image = file.subList(i + 1, j - 1).map { it.toCharArray() }
             Image(id, image)

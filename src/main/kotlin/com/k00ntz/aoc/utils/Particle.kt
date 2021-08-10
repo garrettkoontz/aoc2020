@@ -1,9 +1,5 @@
 package com.k00ntz.aoc.utils
 
-import com.k00ntz.aoc2020.utils.*
-import com.k00ntz.aoc2020.utils.Point
-import com.k00ntz.aoc2020.utils.pmap
-
 
 data class Particle(
     val position: Point = Pair(0, 0),
@@ -29,9 +25,9 @@ class ParticleGrid(val grid: Map<Int, List<Particle>>) {
 
     constructor(particles: List<Particle>) : this(particles.groupBy { it.x }
         .mapValues {
-            it.value.sortedWith(Comparator { o1, o2 ->
+            it.value.sortedWith { o1, o2 ->
                 o1.y.compareTo(o2.y)
-            })
+            }
         })
 
     fun tick(): ParticleGrid =
@@ -60,8 +56,8 @@ class ParticleGrid(val grid: Map<Int, List<Particle>>) {
     }
 
     override fun toString(): String {
-        val maxY: Int = grid.keys.max()!!
-        val maxX: Int = grid.map { it.value }.flatten().maxBy { it: Particle -> it.position.x() }!!.position.x()
+        val maxY: Int = grid.keys.maxOrNull()!!
+        val maxX: Int = grid.map { it.value }.flatten().maxByOrNull { it.position.x() }!!.position.x()
         val origin = Point(maxX, maxY)
         fun scaleParticle(pt: Particle): Point = origin + pt.position
         val arrays = (-maxY..maxY).map { (-maxX..maxX).map { notPointChar }.toTypedArray() }.toTypedArray()

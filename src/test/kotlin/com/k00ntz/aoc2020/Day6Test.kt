@@ -1,6 +1,6 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.groupSeparatedByEmpty
+import com.k00ntz.aoc.utils.groupSeparatedByEmpty
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

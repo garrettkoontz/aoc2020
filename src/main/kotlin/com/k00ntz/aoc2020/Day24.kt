@@ -1,13 +1,14 @@
 package com.k00ntz.aoc2020
 
-import com.k00ntz.aoc2020.utils.Day
-import com.k00ntz.aoc2020.utils.measureAndPrintTime
-import com.k00ntz.aoc2020.utils.parseFile
+import com.k00ntz.aoc.utils.Day
+import com.k00ntz.aoc.utils.measureAndPrintTime
+import com.k00ntz.aoc.utils.parseFile
+import java.util.*
 
 class Day24 : Day<List<Directions>, Int, Int> {
     override fun run() {
         val inputFile =
-            parseFile("${this.javaClass.simpleName.toLowerCase()}.txt") {
+            parseFile("${this.javaClass.simpleName.lowercase(Locale.getDefault())}.txt") {
                 Directions.parse(it)
             }
 //            parse(getFileAsLineSequence("${this.javaClass.simpleName.toLowerCase()}.txt"))
@@ -74,7 +75,7 @@ operator fun HexPoint.plus(other: HexPoint): HexPoint =
 data class Directions(val lst: List<HexDirection>) {
     companion object {
         fun parse(s: String): Directions {
-            val sUpper = s.toUpperCase()
+            val sUpper = s.uppercase(Locale.getDefault())
             var i = 0
             val lst = mutableListOf<HexDirection>()
             while (i < sUpper.length) {
